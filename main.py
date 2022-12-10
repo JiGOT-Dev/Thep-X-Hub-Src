@@ -3,6 +3,7 @@ import interactions
 import requests
 import time
 import os
+# import flet as ft เอา # ออก ถ้าใช้ replit ( ระบบนี้คือ ทำให้บอทออน 24 ชม ถ้าไม่ปิด Tab replit นะครับ )
 from interactions import *
 from os import system
 from interactions import Button, ButtonStyle, CommandContext, SelectMenu, SelectOption, ActionRow, Modal, TextInput, TextStyleType, Embed
@@ -65,6 +66,8 @@ bot = interactions.Client(token, intents=interactions.Intents.DEFAULT | interact
 
 @bot.event
 async def on_start():
+    #page.title = "Web Alive | v 0.0.1" เอา # ออก ถ้ารันใน Replit ( ระบบ ทำให้บอทออน 24 ชม )
+    #ft.app(target=main) เอา # ออก ถ้ารันใน Replit ( ระบบ ทำให้บอทออน 24 ชม )
     if auto_teach == "1":
         teach_ch = await interactions.get(bot, interactions.Channel, object_id=use_ch)
         await teach_ch.send("> **วิธีใช้ยิงเบอร์แบบใหม่ ( By Thep X Hub )**\n \n```พิมเบอร์ใส่ได้เลยครับ```\n")    
