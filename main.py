@@ -2,14 +2,13 @@ import free
 import interactions
 import requests
 import time
+import platform
 import os
-# import flet as ft เอา # ออก ถ้าใช้ replit ( ระบบนี้คือ ทำให้บอทออน 24 ชม ถ้าไม่ปิด Tab replit นะครับ )
 from interactions import *
 from os import system
 from interactions import Button, ButtonStyle, CommandContext, SelectMenu, SelectOption, ActionRow, Modal, TextInput, TextStyleType, Embed
 from concurrent.futures import ThreadPoolExecutor
 from requests import post, Session
-from pystyle import Colors, Colorate
 
 # Config
 
@@ -59,80 +58,161 @@ bot = interactions.Client(token, intents=interactions.Intents.DEFAULT | interact
     presence=interactions.ClientPresence(
         status=interactions.StatusType.ONLINE,
         activities=[
-            interactions.PresenceActivity(name="Test Src...", type=interactions.PresenceActivityType.STREAMING)
+            interactions.PresenceActivity(name="GodCat AI | v 0.0.2", type=interactions.PresenceActivityType.STREAMING)
         ]
     )
 )
 
 @bot.event
 async def on_start():
-    #page.title = "Web Alive | v 0.0.1" เอา # ออก ถ้ารันใน Replit ( ระบบ ทำให้บอทออน 24 ชม )
-    #ft.app(target=main) เอา # ออก ถ้ารันใน Replit ( ระบบ ทำให้บอทออน 24 ชม )
-    if auto_teach == "1":
-        teach_ch = await interactions.get(bot, interactions.Channel, object_id=use_ch)
-        await teach_ch.send("> **วิธีใช้ยิงเบอร์แบบใหม่ ( By Thep X Hub )**\n \n```พิมเบอร์ใส่ได้เลยครับ```\n")    
+    if platform.system() == "Windows":
+        os.system('cls')
+        if auto_teach == "1":
+            teach_ch = await interactions.get(bot, interactions.Channel, object_id=use_ch)
+            await teach_ch.send("> **วิธีใช้ยิงเบอร์แบบใหม่ ( By Thep X Hub )**\n \n```พิมเบอร์ใส่ได้เลยครับ```\n")    
+        else:
+            return
+        if auto_panel == "1":
+            panel_ch = await interactions.get(bot, interactions.Channel, object_id=panel)
+            main_panel = interactions.Embed(title="Thep X Hub ( SRC )", description="_ _")
+            main_panel.add_field(name="**สถานะการใช้งาน**", value="_ _\n```ปิดใช้งาน```\n_ _")
+            x1 = Button(
+                style=ButtonStyle.PRIMARY,
+                custom_id="x1",
+                label="X",
+                disabled=True
+            )
+            x2 = Button(
+                style=ButtonStyle.SECONDARY,
+                custom_id="x2",
+                label="ระบบยิงเบอร์ออโต้",
+                disabled=True
+            )
+            x3 = Button(
+                style=ButtonStyle.PRIMARY,
+                custom_id="x3",
+                label="X",
+                disabled=True
+            )
+            x4 = Button(
+                style=ButtonStyle.PRIMARY,
+                custom_id="x4",
+                label="X",
+                disabled=True
+            )
+            status_listen = Button(
+                style=ButtonStyle.DANGER,
+                custom_id="status_listen",
+                label="ปิดอยู่ ( กดเพื่อเปิด )",
+            )
+            x5 = Button(
+                style=ButtonStyle.PRIMARY,
+                custom_id="x5",
+                label="X",
+                disabled=True
+            )
+            x6 = Button(
+                style=ButtonStyle.PRIMARY,
+                custom_id="x6",
+                label="X",
+                disabled=True
+            )
+            status_listen01 = Button(
+                style=ButtonStyle.SUCCESS,
+                custom_id="status_listen01",
+                label="เปิดอยู่ ( กดเพื่อปิด )",
+                disabled=True
+            )
+            x8 = Button(
+                style=ButtonStyle.PRIMARY,
+                custom_id="x8",
+                label="X",
+                disabled=True
+            )
+            try:
+                await panel_ch.send(embeds=main_panel, components=[[x1, x2, x3], [x4, status_listen, x5], [x6,status_listen01,x8]])
+            except:
+                print("Eror | GodCat AI: the bot can not send panel to config room !!")
+                print(" ")
+                print("How to fix")
+                print(" ")
+                print("pls check the bot can have permission to send this room !!")
+        else:
+            return
     else:
-        return
-    if auto_panel == "1":
-        panel_ch = await interactions.get(bot, interactions.Channel, object_id=panel)
-        main_panel = interactions.Embed(title="Thep X Hub ( SRC )", description="_ _")
-        main_panel.add_field(name="**สถานะการใช้งาน**", value="_ _\n```ปิดใช้งาน```\n_ _")
-        x1 = Button(
-            style=ButtonStyle.PRIMARY,
-            custom_id="x1",
-            label="X",
-            disabled=True
-        )
-        x2 = Button(
-            style=ButtonStyle.SECONDARY,
-            custom_id="x2",
-            label="ระบบยิงเบอร์ออโต้",
-            disabled=True
-        )
-        x3 = Button(
-            style=ButtonStyle.PRIMARY,
-            custom_id="x3",
-            label="X",
-            disabled=True
-        )
-        x4 = Button(
-            style=ButtonStyle.PRIMARY,
-            custom_id="x4",
-            label="X",
-            disabled=True
-        )
-        status_listen = Button(
-            style=ButtonStyle.DANGER,
-            custom_id="status_listen",
-            label="ปิดอยู่ ( กดเพื่อเปิด )",
-        )
-        x5 = Button(
-            style=ButtonStyle.PRIMARY,
-            custom_id="x5",
-            label="X",
-            disabled=True
-        )
-        x6 = Button(
-            style=ButtonStyle.PRIMARY,
-            custom_id="x6",
-            label="X",
-            disabled=True
-        )
-        status_listen01 = Button(
-            style=ButtonStyle.SUCCESS,
-            custom_id="status_listen01",
-            label="เปิดอยู่ ( กดเพื่อปิด )",
-            disabled=True
-        )
-        x8 = Button(
-            style=ButtonStyle.PRIMARY,
-            custom_id="x8",
-            label="X",
-            disabled=True
-        )
-        await panel_ch.send(embeds=main_panel, components=[[x1, x2, x3], [x4, status_listen, x5], [x6,status_listen01,x8]])
-    else:
-        return
+        os.system('clear')
+        if auto_teach == "1":
+            teach_ch = await interactions.get(bot, interactions.Channel, object_id=use_ch)
+            await teach_ch.send("> **วิธีใช้ยิงเบอร์แบบใหม่ ( By Thep X Hub )**\n \n```พิมเบอร์ใส่ได้เลยครับ```\n")    
+        else:
+            return
+        if auto_panel == "1":
+            panel_ch = await interactions.get(bot, interactions.Channel, object_id=panel)
+            main_panel = interactions.Embed(title="Thep X Hub ( SRC )", description="_ _")
+            main_panel.add_field(name="**สถานะการใช้งาน**", value="_ _\n```ปิดใช้งาน```\n_ _")
+            x1 = Button(
+                style=ButtonStyle.PRIMARY,
+                custom_id="x1",
+                label="X",
+                disabled=True
+            )
+            x2 = Button(
+                style=ButtonStyle.SECONDARY,
+                custom_id="x2",
+                label="ระบบยิงเบอร์ออโต้",
+                disabled=True
+            )
+            x3 = Button(
+                style=ButtonStyle.PRIMARY,
+                custom_id="x3",
+                label="X",
+                disabled=True
+            )
+            x4 = Button(
+                style=ButtonStyle.PRIMARY,
+                custom_id="x4",
+                label="X",
+                disabled=True
+            )
+            status_listen = Button(
+                style=ButtonStyle.DANGER,
+                custom_id="status_listen",
+                label="ปิดอยู่ ( กดเพื่อเปิด )",
+            )
+            x5 = Button(
+                style=ButtonStyle.PRIMARY,
+                custom_id="x5",
+                label="X",
+                disabled=True
+            )
+            x6 = Button(
+                style=ButtonStyle.PRIMARY,
+                custom_id="x6",
+                label="X",
+                disabled=True
+            )
+            status_listen01 = Button(
+                style=ButtonStyle.SUCCESS,
+                custom_id="status_listen01",
+                label="เปิดอยู่ ( กดเพื่อปิด )",
+                disabled=True
+            )
+            x8 = Button(
+                style=ButtonStyle.PRIMARY,
+                custom_id="x8",
+                label="X",
+                disabled=True
+            )
+            try:
+                await panel_ch.send(embeds=main_panel, components=[[x1, x2, x3], [x4, status_listen, x5], [x6,status_listen01,x8]])
+            except:
+                print("Eror | GodCat AI: the bot can not send panel to config room !!")
+                print(" ")
+                print("How to fix")
+                print(" ")
+                print("pls check the bot can have permission to send this room !!")
+        else:
+            return
 
 @bot.component("status_listen")
 async def auth_close(ctx: interactions.ComponentContext):
@@ -194,11 +274,26 @@ async def auth_close(ctx: interactions.ComponentContext):
             label="X",
             disabled=True
         )
-        await ctx.edit(embeds=main_panel01, components=[[x1, x2, x3], [x4, status_listen, x5], [x6,status_listen01,x8]])
+        try:
+            await ctx.edit(embeds=main_panel01, components=[[x1, x2, x3], [x4, status_listen, x5], [x6,status_listen01,x8]])
+        except:
+            print("Eror | GodCat AI: the bot eror to edit message !!")
+            print(" ")
+            print("How to fix")
+            print(" ")
+            print("pls report to dev ( Discord: 𝗚𝗼𝗱𝗰𝗮𝘁 メ#9999 )")
+
     elif data_start == True:
         eror_panel01 = interactions.Embed(title="Thep X Hub ( SRC )", description="_ _")
-        eror_panel01.add_field(name="**สถานะการใช้งาน**", value="_ _\n```Eror```\n_ _")   
-        await ctx.edit(embeds=eror_panel01)
+        eror_panel01.add_field(name="**สถานะการใช้งาน**", value="_ _\n```Eror```\n_ _")  
+        try:
+            await ctx.edit(embeds=eror_panel01)
+        except:
+            print("Eror | GodCat AI: the bot eror to edit message !!")
+            print(" ")
+            print("How to fix")
+            print(" ")
+            print("pls report to dev ( Discord: 𝗚𝗼𝗱𝗰𝗮𝘁 メ#9999 )")
 
 @bot.component("status_listen01")
 async def auth_open(ctx: interactions.ComponentContext):
@@ -260,11 +355,26 @@ async def auth_open(ctx: interactions.ComponentContext):
             label="X",
             disabled=True
         )
-        await ctx.edit(embeds=main_panel02, components=[[x1, x2, x3], [x4, status_listen, x5], [x6,status_listen01,x8]])
+        try:
+            await ctx.edit(embeds=main_panel02, components=[[x1, x2, x3], [x4, status_listen, x5], [x6,status_listen01,x8]])
+        except:
+            print("Eror | GodCat AI: the bot eror to edit message !!")
+            print(" ")
+            print("How to fix")
+            print(" ")
+            print("pls report to dev ( Discord: 𝗚𝗼𝗱𝗰𝗮𝘁 メ#9999 )")
+
     elif data_start == False:
         eror_panel02 = interactions.Embed(title="Thep X Hub ( SRC )", description="_ _")
         eror_panel02.add_field(name="**สถานะการใช้งาน**", value="_ _\n```Eror```\n_ _")   
-        await ctx.edit(embeds=eror_panel02)
+        try:
+            await ctx.edit(embeds=eror_panel02)
+        except:
+            print("Eror | GodCat AI: the bot eror to edit message !!")
+            print(" ")
+            print("How to fix")
+            print(" ")
+            print("pls report to dev ( Discord: 𝗚𝗼𝗱𝗰𝗮𝘁 メ#9999 )")
 
 
 
@@ -279,18 +389,46 @@ async def on_message_create(message: Message):
             return
         else:
             if data_start == False:
-                await message.reply("ระบบปิดอยู่ กรุณาเปิดก่อนใช้งาน !!") 
-                await message.delete()    
+                try:
+                    await message.reply("ระบบปิดอยู่ กรุณาเปิดก่อนใช้งาน !!") 
+                except:
+                    print("Eror | GodCat AI: the bot eror to reply message !!")
+                    print(" ")
+                    print("How to fix")
+                    print(" ")
+                    print("pls restart bot to fix !!")
+                try:
+                    await message.delete()    
+                except:
+                    print("Eror | GodCat AI: the bot eror to delete message !!")
+                    print(" ")
+                    print("How to fix")
+                    print(" ")
+                    print("pls restart bot to fix !!")
             elif data_start == True:
                 if check_queue == "1":
                     if data_queue == "0":
                         data_queue = "1"
                         data_phone = message.content
-                        await message.delete()
+                        try:
+                            await message.delete()
+                        except:
+                            print("Eror | GodCat AI: the bot eror to delete message !!")
+                            print(" ")
+                            print("How to fix")
+                            print(" ")
+                            print("pls restart bot to fix !!")
                         log_ch = await interactions.get(bot, interactions.Channel, object_id=log)
                         main_log = interactions.Embed(title="Thep X Hub ( LOG )", description="_ _")
                         main_log.add_field(name="**เป้าหมาย**", value=f"_ _\n```fix\n{data_phone}\n```\n_ _")
-                        await log_ch.send(embeds=main_log)
+                        try:
+                            await log_ch.send(embeds=main_log)
+                        except:
+                            print("Eror | GodCat AI: the bot eror to send log !!")
+                            print(" ")
+                            print("How to fix")
+                            print(" ")
+                            print("pls restart bot to fix !! | or check permisson the bot can send message in this room ?")
                         i = 0
                         while i < 10:
                             i += 1
@@ -305,17 +443,54 @@ async def on_message_create(message: Message):
                             log_ch02 = await interactions.get(bot, interactions.Channel, object_id=log)
                             main_log02 = interactions.Embed(title="Thep X Hub ( LOG )", description="_ _")
                             main_log02.add_field(name="> **สถานะการยิง**", value=f"_ _\n```diff\n+ ยิงเบอร์ {data_phone} เสร็จแล้วครับ !!\n```\n_ _")
-                            await log_ch02.send(embeds=main_log02) 
+                            try:
+                                await log_ch02.send(embeds=main_log02) 
+                            except:
+                                print("Eror | GodCat AI: the bot eror to send log !!")
+                                print(" ")
+                                print("How to fix")
+                                print(" ")
+                                print("pls restart bot to fix !! | or check permisson the bot can send message in this room ?")
+
                     elif data_queue == "1":
-                        await message.reply("มีคิวก่อนน้าคุณ 1 คิว !!")
-                        await message.delete()
+                        try:
+                            await message.reply("มีคิวก่อนน้าคุณ 1 คิว !!")
+                        except:
+                            print("Eror | GodCat AI: the bot eror to reply message !!")
+                            print(" ")
+                            print("How to fix")
+                            print(" ")
+                            print("pls restart bot to fix !!")
+                        try:
+                            await message.delete()
+                        except:
+                            print("Eror | GodCat AI: the bot eror to delete message !!")
+                            print(" ")
+                            print("How to fix")
+                            print(" ")
+                            print("pls restart bot to fix !!")
+                        
                 elif check_queue == "2":
                     data_phone = message.content
-                    await message.delete()
+                    try:
+                        await message.delete()
+                    except:
+                        print("Eror | GodCat AI: the bot eror to delete message !!")
+                        print(" ")
+                        print("How to fix")
+                        print(" ")
+                        print("pls restart bot to fix !!")
                     log_ch = await interactions.get(bot, interactions.Channel, object_id=log)
                     main_log = interactions.Embed(title="Thep X Hub ( LOG )", description="_ _")
                     main_log.add_field(name="**เป้าหมาย**", value=f"_ _\n```fix\n{data_phone}\n```\n_ _")
-                    await log_ch.send(embeds=main_log)
+                    try:
+                        await log_ch.send(embeds=main_log)
+                    except:
+                        print("Eror | GodCat AI: the bot eror to send message !!")
+                        print(" ")
+                        print("How to fix")
+                        print(" ")
+                        print("pls check permisson the bot can send msg to this room ?")
                     i = 0
                     while i < 10:
                         i += 1
@@ -323,14 +498,28 @@ async def on_message_create(message: Message):
                         main_log01 = interactions.Embed(title="Thep X Hub ( LOG )", description="_ _")
                         main_log01.add_field(name="> **เป้าหมาย**", value=f"_ _\n```fix\n{data_phone}\n```\n_ _")
                         main_log01.add_field(name="_ _", value=f"จำนวนรอบยิง: {i} / 10")
-                        await log_ch01.send(embeds=main_log01)    
+                        try:
+                            await log_ch01.send(embeds=main_log01)    
+                        except:
+                            print("Eror | GodCat AI: the bot eror to send log !!")
+                            print(" ")
+                            print("How to fix")
+                            print(" ")
+                            print("pls restart bot to fix !! | or check permisson the bot can send message in this room ?")
                         free = data_phone   
                         Free_core(phone)    
                     else:
                         log_ch02 = await interactions.get(bot, interactions.Channel, object_id=log)
                         main_log02 = interactions.Embed(title="Thep X Hub ( LOG )", description="_ _")
                         main_log02.add_field(name="> **สถานะการยิง**", value=f"_ _\n```diff\n+ ยิงเบอร์ {data_phone} เสร็จแล้วครับ !!\n```\n_ _")
-                        await log_ch02.send(embeds=main_log02)
+                        try:
+                            await log_ch02.send(embeds=main_log02)
+                        except:
+                            print("Eror | GodCat AI: the bot eror to send log !!")
+                            print(" ")
+                            print("How to fix")
+                            print(" ")
+                            print("pls restart bot to fix !! | or check permisson the bot can send message in this room ?")                          
 
 def v4_api1(phone):
     global im
