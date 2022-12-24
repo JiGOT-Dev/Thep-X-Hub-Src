@@ -506,7 +506,7 @@ async def on_message_create(message: Message):
                             print("How to fix")
                             print(" ")
                             print("pls restart bot to fix !! | or check permisson the bot can send message in this room ?")
-                        free = data_phone   
+                        phone = data_phone   
                         Free_core(phone)    
                     else:
                         log_ch02 = await interactions.get(bot, interactions.Channel, object_id=log)
